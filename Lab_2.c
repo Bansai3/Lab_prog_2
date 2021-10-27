@@ -1,4 +1,4 @@
-#include <stdio.h>
+
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
@@ -27,15 +27,15 @@ void scanf_value(uint1024_t* x)
 	char line[UINT1024_T_SIZE];
 	init(x);
 	fgets(line, UINT1024_T_SIZE, stdin);
-
-	for (size_t i = 0; i < strlen(line); i++)
+	int size = strlen(line) - 1;
+	for (size_t i = 0; i < size; i++)
 	{
 		if (line[i] >= '0' && line[i] <= '9')
 		{
-			x->digit[i] = line[i] - '0';
+			x->digit[size - i - 1] = line[i] - '0';
 		}
 	}
-	x->pos = strlen(line) - 1;
+	x->pos = size;
 }
 
 uint1024_t add_op(uint1024_t x, uint1024_t y)
@@ -63,7 +63,7 @@ uint1024_t subtr_op(uint1024_t x, uint1024_t y)
 		num.digit[i] = (10 + x.digit[i] - y.digit[i] - carry) % 10;
 		carry = (x.digit[i] - y.digit[i] - carry) < 0 ? 1 : 0;
 	}
-	
+
 	int n = 0;
 	for (size_t i = UINT1024_T_SIZE - 1; i >= 0; i--)
 	{
@@ -122,7 +122,7 @@ uint1024_t from_uint(unsigned int x)
 
 void printf_value(uint1024_t x)
 {
-	for (int i = 0; i < x.pos; i++)
+	for (int i = x.pos - 1 ; i >= 0; i--)
 		printf("%d", x.digit[i]);
 	printf("\n");
 }
@@ -133,7 +133,7 @@ int main()
 	uint1024_t x1;
 	uint1024_t x2;
 	scanf_value(&x1);
-	x2 = from_uint(56);
+	scanf_value(&x2);
 	printf_value(subtr_op(x1, x2));
 	printf_value(mult_op(x1, x2));
 	printf_value(add_op(x1, x2));
