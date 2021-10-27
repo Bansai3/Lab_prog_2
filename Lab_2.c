@@ -139,5 +139,4 @@ int main()
 	printf_value(add_op(x1, x2));
 
 	return 0;
-	
 }
