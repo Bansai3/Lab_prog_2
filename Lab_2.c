@@ -8,7 +8,7 @@
 typedef struct
 {
 	uint8_t digit[UINT1024_T_SIZE];
-	uint8_t pos;
+	long pos;
 } uint1024_t;
 
 
